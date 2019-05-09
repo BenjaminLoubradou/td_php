@@ -95,7 +95,7 @@ die();*/
                                 <?php else :?>
                                 <span class="badge badge-dark">user</span>
                                 <?php endif ?>
-                            <td>
+                            <td><!-- ne pas oublier de créer une variable $date avant de la formater avec date_format()-->
                                 <?php $date = date_create($user['created_at']) ?>
                                 <?= date_format($date,'d/m/y H:i') ?>
                             </td>
