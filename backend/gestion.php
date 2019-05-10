@@ -1,4 +1,6 @@
 <?php
+require '../kernel/session_check.php';
+require '../kernel/functions.php';
 require '../kernel/db_connect.php';
 require '../models/user.php';
 $users = findAllUsers();
@@ -70,7 +72,11 @@ die();*/
     <div class="jumbotron">
         <div class="row">
             <div class="col-12">
-                <h1>Gestion des abonnées</h1>
+                <h1 class="float-left">Gestion des abonnées</h1>
+                <div class="float-right ">
+                    <span class="badge badge-primary">Bienvenue <?= $_SESSION['login'] ?></span>
+                </div>
+                <?= getFlash() ?>
                 <table class="table table-bordered table-striped table-hover table">
                     <thead>
                         <tr>
@@ -101,15 +107,24 @@ die();*/
                                 <?= date_format($date,'d/m/y H:i') ?>
                             </td>
                             <td>
-                                <a href="../controllers/toggleAdmin.php?id=<?= $user['id'] ?>" class="btn btn-outline-dark">Donner droit admin</a>
+                                <?php if(!$user['is_admin']) :?>
+                                <a href="../controllers/toggleAdmin.php?id=<?=$user['id']?> &admin=1"
+                                   class="btn btn-outline-dark">Donner droit admin</a>
+                                <?php else: ?>
+                                <a href="../controllers/toggleAdmin.php?id=<?= $user['id'] ?>"                                    class="btn btn-dark<?php if($_SESSION['id_admin'] == $user['id']) :?> disabled <?php endif ?>">Révoquer les droits</a>
+                                <?php endif ?>
                             </td>
                         </tr>
                         <?php endforeach ?>
                     </tbody>
                 </table>
+                <div class="container text-center">
+                    <a onclick="return confirm('Etes-vous sur de vouloir quitter ?')" href="../controllers/logout.php">Quitter</a>
+                </div>
             </div>
         </div>
     </div>
+
 </main>
 <script src="../js/jquery-3.3.1.slim.min.js"></script>
 <script src="../js/bootstrap.bundle.min.js"></script></body>
