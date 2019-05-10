@@ -69,7 +69,7 @@ die();*/
 <main role="main" class="container">
     <div class="jumbotron">
         <div class="row">
-            <div class="col-10 offset-1">
+            <div class="col-12">
                 <h1>Gestion des abonnées</h1>
                 <table class="table table-bordered table-striped table-hover table">
                     <thead>
@@ -80,6 +80,7 @@ die();*/
                             <th>Prénom</th>
                             <th>Admin ?</th>
                             <th>Date d'inscription</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -98,6 +99,9 @@ die();*/
                             <td><!-- ne pas oublier de créer une variable $date avant de la formater avec date_format()-->
                                 <?php $date = date_create($user['created_at']) ?>
                                 <?= date_format($date,'d/m/y H:i') ?>
+                            </td>
+                            <td>
+                                <a href="../controllers/toggleAdmin.php?id=<?= $user['id'] ?>" class="btn btn-outline-dark">Donner droit admin</a>
                             </td>
                         </tr>
                         <?php endforeach ?>
